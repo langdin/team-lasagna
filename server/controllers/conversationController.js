@@ -7,7 +7,10 @@ module.exports.getConversations = async (req, res, next) => {
     try {
         const conversations = await Conversation.find({
             members: req.params.profileId
-        }).populate("members");
+        }).populate({
+            path: "members",
+            select: "firstName lastName profilePic"
+        });
         if (!conversations) {
             return res.status(404).json({ err: "Conversations are not found" });
         }
@@ -57,3 +60,15 @@ module.exports.createMessage = async (req, res, next) => {
         res.status(400).json({ err: "Failed to send Message" });
     }
 };
+
+module.exports.getMessages = async (req, res, next) => {
+    try {
+        const messages = await Message.find({ conversationId: req.params.conversationId }).sort({ createdAt: "asc" }).limit(10).populate({
+            path: "profileId",
+            select: "firstName lastName profilePic"
+        });
+        res.status(200).json({ messages, msg: "Messages retrieved" });
+    } catch (err) {
+        res.status(400).json(err.message);
+    }
+}
