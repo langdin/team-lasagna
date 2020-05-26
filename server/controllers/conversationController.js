@@ -7,7 +7,8 @@ module.exports.getConversations = async (req, res, next) => {
     try {
         const conversations = await Conversation.find({
             members: req.params.profileId
-        });
+        }).populate("members");
+        console.log(conversations);
         if (!conversations) {
             return res.status(404).json({ err: "Conversations are not found" });
         }
