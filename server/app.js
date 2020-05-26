@@ -16,6 +16,7 @@ const imgUploadRouter = require("./routes/image-upload");
 const requestRouter = require("./routes/requestRouter");
 const paymentRouter = require("./routes/paymentRouter");
 const bankAccountRouter = require("./routes/bankAccountRouter");
+const conversationRouter = require("./routes/conversationRouter");
 
 const { json, urlencoded } = express;
 
@@ -40,6 +41,7 @@ app.use("/request", requestRouter);
 app.use("/payment", paymentRouter);
 app.use("/img", imgUploadRouter);
 app.use("/connect/bank-account", bankAccountRouter);
+app.use("/conversation", conversationRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

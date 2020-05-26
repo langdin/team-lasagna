@@ -37,7 +37,7 @@ module.exports.getProfileList = async (req, res, next) => {
     //const profiles = await Profile.find({available:true });
     const profiles = await Profile.find({ available: true });
     if (!profiles) {
-      return res.status(404).json({ err: "No profiles founds" });
+      return res.status(404).json({ err: "No profiles found" });
     }
     res.status(200).json(profiles);
   } catch (err) {
