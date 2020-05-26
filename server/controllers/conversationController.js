@@ -8,7 +8,6 @@ module.exports.getConversations = async (req, res, next) => {
         const conversations = await Conversation.find({
             members: req.params.profileId
         }).populate("members");
-        console.log(conversations);
         if (!conversations) {
             return res.status(404).json({ err: "Conversations are not found" });
         }
@@ -40,5 +39,21 @@ module.exports.createConversation = async (req, res, next) => {
     } catch (err) {
         res.status(400).json(err.message);
     }
-
 }
+
+module.exports.createMessage = async (req, res, next) => {
+    const data = {
+        conversationId: req.body.conversationId,
+        profileId: req.body.profileId,
+        text: req.body.text
+    }
+    try {
+        const message = await Message.create(data);
+        if (!message) {
+            return res.status(404).json({ err: "Failed to send Message" });
+        }
+        res.status(200).json({ message, msg: "Message sent" });
+    } catch (err) {
+        res.status(400).json({ err: "Failed to send Message" });
+    }
+};
