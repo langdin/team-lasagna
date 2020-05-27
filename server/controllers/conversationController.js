@@ -11,9 +11,6 @@ module.exports.getConversations = async (req, res, next) => {
             path: "members",
             select: "firstName lastName profilePic"
         });
-        if (!conversations) {
-            return res.status(404).json({ err: "Conversations are not found" });
-        }
         res.status(200).json({ conversations, msg: "Conversations returned successfully" });
     } catch (err) {
         res.status(400).json(err.message);
