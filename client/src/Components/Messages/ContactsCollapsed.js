@@ -78,7 +78,7 @@ export default function ContactsCollapsed({ contacts, chooseRecipient }) {
                 <ListItem
                   button
                   key={contact.profile._id}
-                  onClick={() => chooseRecipient(contact.conversationId)}
+                  onClick={() => chooseRecipient(contact.conversationId, contact.profile)}
                 >
                   <ListItemIcon>
                     {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Messages() {
   const classes = useStyles();
   const [sender, setSender] = useState({});
-  const [recipient, setRecipient] = useState(null);
+  const [recipient, setRecipient] = useState({});
   const [contacts, setContacts] = useState([]);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -66,8 +66,9 @@ export default function Messages() {
     }
   };
 
-  const chooseRecipient = (conversationId) => {
+  const chooseRecipient = (conversationId, friend) => {
     setConversation(conversationId);
+    setRecipient(friend);
   };
 
   useEffect(() => {
@@ -86,6 +87,7 @@ export default function Messages() {
           contacts={contacts}
           messages={messages}
           chooseRecipient={chooseRecipient}
+          recipient={recipient}
         />
       </Grid>
     </>

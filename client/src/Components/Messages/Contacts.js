@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   head: {
     padding: "0 10px 10px 20px",
     borderBottom: "2px solid #f5f5f5",
+    minHeight: "52px",
+    display: "flex",
+    alignItems: "center",
   },
   avatar: {
     marginRight: "10px",
@@ -41,11 +44,7 @@ export default function Contact({ contacts, chooseRecipient }) {
         className={classes.mobileHide + " " + classes.rightBorder}
       >
         <Grid item xs={12} className={classes.head}>
-          <Typography
-            variant="h6"
-            fontWeight="fontWeightBold"
-            className={classes.title}
-          >
+          <Typography variant="h6" fontWeight="fontWeightBold">
             Chats
           </Typography>
         </Grid>
@@ -54,7 +53,9 @@ export default function Contact({ contacts, chooseRecipient }) {
             <ListItem
               button
               key={contact.profile._id}
-              onClick={() => chooseRecipient(contact.conversationId)}
+              onClick={() =>
+                chooseRecipient(contact.conversationId, contact.profile)
+              }
             >
               <Avatar
                 alt={`${contact.profile.firstName} ${contact.profile.lastName}`}
