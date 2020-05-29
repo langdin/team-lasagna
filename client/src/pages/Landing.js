@@ -15,12 +15,12 @@ import SuccessPage from "../pages/Success";
 import NotFound from "../pages/NotFound";
 import AddPayment from "../Components/Payment/AddPayment";
 import Availability from "./Availability";
-import Bookings from "../Components/Bookings/Bookings"
-import UpcomingJobs from "../Components/Bookings/UpcomingJobs"
-import CompletedJobs from "../Components/Bookings/CompletedJobs"
-import OwnerBookings from "../Components/Bookings/OwnerBookings"
-import Settings from "../Components/Settings/Settings"
-
+import Bookings from "../Components/Bookings/Bookings";
+import UpcomingJobs from "../Components/Bookings/UpcomingJobs";
+import CompletedJobs from "../Components/Bookings/CompletedJobs";
+import OwnerBookings from "../Components/Bookings/OwnerBookings";
+import Settings from "../Components/Settings/Settings";
+import Messages from "../pages/Messages";
 
 const landinPageStyle = (theme) => ({
   container: {
@@ -47,13 +47,14 @@ function LandingPage(props) {
     switch (props.pathName) {
       case "signup":
         return <Register />;
+      case "messages":
+        return <Messages />;
       case "login":
         return <Login />;
       case "editProfile":
         return <UserProfile />;
       case "profilePhoto":
         return <ProfilePhoto setPictureChanged={setPictureChanged} />;
-        return <ProfilePhoto />;
       case "availability":
         return <Availability />;
       case "profile-listing":
@@ -75,9 +76,9 @@ function LandingPage(props) {
       case "completedJobs":
         return <CompletedJobs />;
       case "ownerBookings":
-        return <OwnerBookings />
+        return <OwnerBookings />;
       case "settings":
-        return <Settings />
+        return <Settings />;
       case "/":
         return <ProfileListing />;
       default:
