@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
-    minHeight: "52px",
   },
   rightBorder: {
     borderRight: "2px solid #f5f5f5",
@@ -45,12 +44,17 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: "0 20px",
+    display: "inline-block",
+    verticalAlign: "middle",
   },
   head: {
-    padding: "0 10px 10px 20px",
+    padding: "0 10px 0 20px",
     borderBottom: "2px solid #f5f5f5",
-    display: "flex",
-    alignItems: "center",
+    minHeight: "52px",
+  },
+  title: {
+    display: "inline-block",
+    verticalAlign: "middle",
   },
 }));
 

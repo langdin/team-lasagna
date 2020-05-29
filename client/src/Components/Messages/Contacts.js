@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import "react-credit-cards/es/styles-compiled.css";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";

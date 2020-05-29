@@ -81,6 +81,7 @@ export default function Messages() {
       <ContactsCollapsed
         contacts={contacts}
         chooseRecipient={chooseRecipient}
+        recipient={recipient}
       />
       <Grid item xs={12} className={classes.wrapper}>
         <Messanger
