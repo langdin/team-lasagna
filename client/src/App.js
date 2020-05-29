@@ -17,6 +17,22 @@ function App() {
           <Switch>
             <Route
               exact
+              path="/messages"
+              render={(props) =>
+                isLoggedIn() ? (
+                  <LandingPage
+                    {...props}
+                    pathName="messages"
+                    showSideBar={false}
+                    isAuthed={isLoggedIn}
+                  />
+                ) : (
+                    <Redirect to="/login" />
+                  )
+              }
+            />
+            <Route
+              exact
               path="/success/:id"
               render={(props) =>
                 isLoggedIn() ? (
@@ -27,8 +43,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
@@ -43,8 +59,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
@@ -83,8 +99,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
@@ -99,8 +115,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
@@ -115,8 +131,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
@@ -131,8 +147,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
@@ -147,8 +163,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
@@ -163,8 +179,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
@@ -179,8 +195,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
@@ -195,8 +211,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
@@ -211,8 +227,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
@@ -227,8 +243,8 @@ function App() {
                     isAuthed={isLoggedIn}
                   />
                 ) : (
-                  <Redirect to="/login" />
-                )
+                    <Redirect to="/login" />
+                  )
               }
             />
             <Route
