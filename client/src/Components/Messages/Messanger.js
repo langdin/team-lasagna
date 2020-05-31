@@ -63,13 +63,11 @@ export default function Messsanger({
   messages,
   chooseRecipient,
   recipient,
+  handleSubmit,
+  newMessage,
+  setNewMessage,
 }) {
   const classes = useStyles();
-  const [newMessage, setNewMessage] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
 
   return (
     <>
@@ -105,7 +103,7 @@ export default function Messsanger({
               {messages.map((message, index) =>
                 message.profileId._id !==
                 JSON.parse(localStorage.getItem("profile"))._id ? (
-                  <ListItem button key={message.text}>
+                  <ListItem button key={message._id}>
                     <Avatar
                       alt={`${message.profileId.firstName} ${message.profileId.lastName}`}
                       src={message.profileId.profilePic}
@@ -141,6 +139,7 @@ export default function Messsanger({
                     margin="dense"
                     fullWidth
                     value={newMessage}
+                    autoComplete="off"
                     onChange={(e) => setNewMessage(e.target.value)}
                   />
                 </Grid>

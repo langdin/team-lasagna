@@ -5,6 +5,7 @@ import "react-credit-cards/es/styles-compiled.css";
 import { Grid } from "@material-ui/core";
 import Messanger from "../Components/Messages/Messanger";
 import ContactsCollapsed from "../Components/Messages/ContactsCollapsed";
+import socket from "../utils/socket";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -21,8 +22,23 @@ export default function Messages() {
   const [newMessage, setNewMessage] = useState("");
   const [conversation, setConversation] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (conversation === "" || newMessage.length === 0) return;
+    try {
+      const msg = await axios.post(
+        `http://localhost:3001/conversation/message`,
+        {
+          conversationId: conversation,
+          profileId: JSON.parse(localStorage.getItem("profile"))._id,
+          text: newMessage,
+        }
+      );
+      socket.emit("new message", msg.data.message);
+    } catch (err) {
+      console.log(err);
+    }
+    setNewMessage("");
   };
 
   const getMessages = async () => {
@@ -38,6 +54,7 @@ export default function Messages() {
       console.log(err);
     }
   };
+
   const getContacts = async () => {
     const profile = JSON.parse(localStorage.getItem("profile"));
     try {
@@ -72,6 +89,13 @@ export default function Messages() {
   };
 
   useEffect(() => {
+    socket.on("new message", (msg) => {
+      messages.push(msg);
+      setMessages([...messages]);
+    });
+  }, []);
+
+  useEffect(() => {
     getContacts();
     getMessages();
   }, [contacts.length, messages.length, conversation]);
@@ -89,6 +113,9 @@ export default function Messages() {
           messages={messages}
           chooseRecipient={chooseRecipient}
           recipient={recipient}
+          handleSubmit={handleSubmit}
+          newMessage={newMessage}
+          setNewMessage={setNewMessage}
         />
       </Grid>
     </>

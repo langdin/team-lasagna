@@ -78,29 +78,23 @@ export default function ContactsCollapsed({
           <Button onClick={toggleDrawer(true)}>
             <MoreVertIcon />
           </Button>
+          {recipient.profilePic ? (
+            <Avatar
+              alt={`${recipient.firstName} ${recipient.lastName}`}
+              src={recipient.profilePic}
+              className={classes.avatar}
+            />
+          ) : (
+            ""
+          )}
           <Typography
             variant="h6"
             fontWeight="fontWeightBold"
             className={classes.title}
           >
-            {recipient.profilePic ? (
-              <Avatar
-                alt={`${recipient.firstName} ${recipient.lastName}`}
-                src={recipient.profilePic}
-                className={classes.avatar}
-              />
-            ) : (
-              ""
-            )}
-            <Typography
-              variant="h6"
-              fontWeight="fontWeightBold"
-              className={classes.title}
-            >
-              {recipient.firstName
-                ? recipient.firstName + " " + recipient.lastName
-                : ""}
-            </Typography>
+            {recipient.firstName
+              ? recipient.firstName + " " + recipient.lastName
+              : ""}
           </Typography>
         </div>
         <SwipeableDrawer
