@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import "react-credit-cards/es/styles-compiled.css";
-import Button from "@material-ui/core/Button";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Grid, Typography, TextField, InputAdornment } from "@material-ui/core";
+import { Grid, Typography, TextField } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from "@material-ui/icons/Send";
@@ -44,8 +39,9 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: "0 20px",
-    display: "inline-block",
+    display: "inline-flex",
     verticalAlign: "middle",
+    textAlign: "center",
   },
   head: {
     padding: "0 10px 0 20px",
@@ -66,6 +62,7 @@ export default function Messsanger({
   handleSubmit,
   newMessage,
   setNewMessage,
+  messagesEndRef,
 }) {
   const classes = useStyles();
 
@@ -80,7 +77,7 @@ export default function Messsanger({
               xs={12}
               className={classes.head + " " + classes.mobileHide}
             >
-              {recipient.profilePic ? (
+              {recipient._id ? (
                 <Avatar
                   alt={`${recipient.firstName} ${recipient.lastName}`}
                   src={recipient.profilePic}
@@ -127,6 +124,7 @@ export default function Messsanger({
                 )
               )}
             </List>
+            <div ref={messagesEndRef} />
           </Grid>
           <Grid item xs={12} className={classes.input}>
             <form onSubmit={handleSubmit} className={classes.form}>

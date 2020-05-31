@@ -15,12 +15,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Messages() {
   const classes = useStyles();
-  const [sender, setSender] = useState({});
   const [recipient, setRecipient] = useState({});
   const [contacts, setContacts] = useState([]);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [conversation, setConversation] = useState("");
+  const messagesEndRef = React.createRef();
+
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,6 +102,7 @@ export default function Messages() {
   useEffect(() => {
     getContacts();
     getMessages();
+    scrollToBottom();
   }, [contacts.length, messages.length, conversation]);
 
   return (
@@ -116,6 +121,7 @@ export default function Messages() {
           handleSubmit={handleSubmit}
           newMessage={newMessage}
           setNewMessage={setNewMessage}
+          messagesEndRef={messagesEndRef}
         />
       </Grid>
     </>
