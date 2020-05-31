@@ -16,7 +16,7 @@ import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
   list: {
-    width: 250,
+    width: 300,
   },
   collapse: {
     [theme.breakpoints.up("sm")]: {
@@ -29,9 +29,34 @@ const useStyles = makeStyles((theme) => ({
   top: {
     display: "flex",
   },
+  avatar: {
+    margin: "0 20px",
+    display: "inline-block",
+    verticalAlign: "middle",
+  },
+  head: {
+    padding: "0 10px 0 20px",
+    borderBottom: "2px solid #f5f5f5",
+    minHeight: "52px",
+  },
+  title: {
+    display: "inline-block",
+    verticalAlign: "middle",
+  },
+  chatsWrap: {
+    minHeight: "65px",
+    borderBottom: "2px solid #f5f5f5",
+  },
+  chatsTitle: {
+    padding: "20px 0 0 30px",
+  },
 }));
 
-export default function ContactsCollapsed({ contacts, chooseRecipient }) {
+export default function ContactsCollapsed({
+  contacts,
+  chooseRecipient,
+  recipient,
+}) {
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
 
@@ -58,7 +83,24 @@ export default function ContactsCollapsed({ contacts, chooseRecipient }) {
             fontWeight="fontWeightBold"
             className={classes.title}
           >
-            FirstName LastName
+            {recipient.profilePic ? (
+              <Avatar
+                alt={`${recipient.firstName} ${recipient.lastName}`}
+                src={recipient.profilePic}
+                className={classes.avatar}
+              />
+            ) : (
+              ""
+            )}
+            <Typography
+              variant="h6"
+              fontWeight="fontWeightBold"
+              className={classes.title}
+            >
+              {recipient.firstName
+                ? recipient.firstName + " " + recipient.lastName
+                : ""}
+            </Typography>
           </Typography>
         </div>
         <SwipeableDrawer
@@ -73,16 +115,29 @@ export default function ContactsCollapsed({ contacts, chooseRecipient }) {
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >
+            <div className={classes.chatsWrap}>
+              <Typography
+                variant="h6"
+                fontWeight="fontWeightBold"
+                className={classes.chatsTitle}
+              >
+                Chats
+              </Typography>
+            </div>
             <List>
               {contacts.map((contact, index) => (
                 <ListItem
                   button
                   key={contact.profile._id}
-                  onClick={() => chooseRecipient(contact.conversationId)}
+                  onClick={() =>
+                    chooseRecipient(contact.conversationId, contact.profile)
+                  }
                 >
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
+                  <Avatar
+                    alt={`${contact.profile.firstName} ${contact.profile.lastName}`}
+                    src={contact.profile.profilePic}
+                    className={classes.avatar}
+                  />
                   <ListItemText
                     primary={`${contact.profile.firstName} ${contact.profile.lastName}`}
                   />

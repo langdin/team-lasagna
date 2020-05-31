@@ -44,14 +44,26 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: "0 20px",
+    display: "inline-block",
+    verticalAlign: "middle",
   },
   head: {
-    padding: "0 10px 10px 20px",
+    padding: "0 10px 0 20px",
     borderBottom: "2px solid #f5f5f5",
+    minHeight: "52px",
+  },
+  title: {
+    display: "inline-block",
+    verticalAlign: "middle",
   },
 }));
 
-export default function Messsanger({ contacts, messages, chooseRecipient }) {
+export default function Messsanger({
+  contacts,
+  messages,
+  chooseRecipient,
+  recipient,
+}) {
   const classes = useStyles();
   const [newMessage, setNewMessage] = useState("");
 
@@ -70,12 +82,23 @@ export default function Messsanger({ contacts, messages, chooseRecipient }) {
               xs={12}
               className={classes.head + " " + classes.mobileHide}
             >
+              {recipient.profilePic ? (
+                <Avatar
+                  alt={`${recipient.firstName} ${recipient.lastName}`}
+                  src={recipient.profilePic}
+                  className={classes.avatar}
+                />
+              ) : (
+                ""
+              )}
               <Typography
                 variant="h6"
                 fontWeight="fontWeightBold"
                 className={classes.title}
               >
-                FirstName LastName
+                {recipient.firstName
+                  ? recipient.firstName + " " + recipient.lastName
+                  : ""}
               </Typography>
             </Grid>
             <List>
