@@ -94,9 +94,11 @@ export default function Messages() {
 
   useEffect(() => {
     socket.on("new message", (msg) => {
-      messages.push(msg);
-      setMessages([...messages]);
+      setMessages([...messages, msg]);
     });
+    return () => {
+      socket.removeListener("new message");
+    };
   }, []);
 
   useEffect(() => {
