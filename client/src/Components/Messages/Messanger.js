@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-block",
     verticalAlign: "middle",
   },
+  icon: {
+    color: "#ff0000",
+  },
 }));
 
 export default function Messsanger({
@@ -142,7 +145,7 @@ export default function Messsanger({
                   />
                 </Grid>
                 <Grid item xs={1}>
-                  <IconButton type="submit">
+                  <IconButton type="submit" className={classes.icon}>
                     <SendIcon />
                   </IconButton>
                 </Grid>
