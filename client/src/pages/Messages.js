@@ -54,7 +54,11 @@ export default function Messages() {
         `http://localhost:3001/conversation/messages/${conversation}`
       );
       if (msgArray.data) {
-        setMessages(msgArray.data.messages);
+        setMessages(
+          msgArray.data.messages.sort(
+            (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+          )
+        );
       }
     } catch (err) {
       console.log(err);

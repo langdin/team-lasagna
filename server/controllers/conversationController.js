@@ -66,7 +66,7 @@ module.exports.getMessages = async (req, res, next) => {
     const messages = await Message.find({
       conversationId: req.params.conversationId,
     })
-      .sort({ createdAt: "asc" })
+      .sort({ createdAt: "-1" })
       .limit(10)
       .populate({
         path: "profileId",

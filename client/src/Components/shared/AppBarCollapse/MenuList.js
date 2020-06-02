@@ -72,6 +72,9 @@ const MenuList = ({ isAuthenticated, pictureChanged }) => {
     <>
       {authed ? (
         <React.Fragment>
+          <Link href="/messages" className={classes.toolbarLink}>
+            Messages
+          </Link>
           <Link href="/bookings" className={classes.toolbarLink}>
             My Jobs
           </Link>
