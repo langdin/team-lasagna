@@ -22,8 +22,8 @@ module.exports.createConversation = async (req, res, next) => {
   try {
     const recipient = await Profile.findById(req.body.recipientId);
     const sender = await Profile.findById(req.body.senderId);
-    if (!recipient || !sender) {
-      return res.status(404).json({ err: "Profiles are not found" });
+    if (!recipient || !sender || recipient._id === sender._id) {
+      return res.status(404).json({ err: "Unable to create conversation" });
     }
     let conversation = await Conversation.findOne({
       $and: [
