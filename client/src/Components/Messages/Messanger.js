@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import "react-credit-cards/es/styles-compiled.css";
-import Button from "@material-ui/core/Button";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Grid, Typography, TextField, InputAdornment } from "@material-ui/core";
+import { Grid, Typography, TextField } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from "@material-ui/icons/Send";
@@ -44,8 +39,9 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: "0 20px",
-    display: "inline-block",
+    display: "inline-flex",
     verticalAlign: "middle",
+    textAlign: "center",
   },
   head: {
     padding: "0 10px 0 20px",
@@ -56,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-block",
     verticalAlign: "middle",
   },
+  icon: {
+    color: "#ff0000",
+  },
 }));
 
 export default function Messsanger({
@@ -63,13 +62,12 @@ export default function Messsanger({
   messages,
   chooseRecipient,
   recipient,
+  handleSubmit,
+  newMessage,
+  setNewMessage,
+  messagesEndRef,
 }) {
   const classes = useStyles();
-  const [newMessage, setNewMessage] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
 
   return (
     <>
@@ -82,7 +80,7 @@ export default function Messsanger({
               xs={12}
               className={classes.head + " " + classes.mobileHide}
             >
-              {recipient.profilePic ? (
+              {recipient._id ? (
                 <Avatar
                   alt={`${recipient.firstName} ${recipient.lastName}`}
                   src={recipient.profilePic}
@@ -105,7 +103,7 @@ export default function Messsanger({
               {messages.map((message, index) =>
                 message.profileId._id !==
                 JSON.parse(localStorage.getItem("profile"))._id ? (
-                  <ListItem button key={message.text}>
+                  <ListItem button key={message._id}>
                     <Avatar
                       alt={`${message.profileId.firstName} ${message.profileId.lastName}`}
                       src={message.profileId.profilePic}
@@ -129,6 +127,7 @@ export default function Messsanger({
                 )
               )}
             </List>
+            <div ref={messagesEndRef} />
           </Grid>
           <Grid item xs={12} className={classes.input}>
             <form onSubmit={handleSubmit} className={classes.form}>
@@ -141,11 +140,12 @@ export default function Messsanger({
                     margin="dense"
                     fullWidth
                     value={newMessage}
+                    autoComplete="off"
                     onChange={(e) => setNewMessage(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={1}>
-                  <IconButton type="submit">
+                  <IconButton type="submit" className={classes.icon}>
                     <SendIcon />
                   </IconButton>
                 </Grid>

@@ -42,7 +42,7 @@ function SitterProfile(props) {
   return (
     <div className={classes.flexContainerSitter}>
       {initialized && <AboutMeProfile profile={profile} />}
-      {showCalendar && initialized && (
+      {showCalendar && initialized && localStorage.getItem("jwt") && (
         <BookSitter profile={profile} userProfile={userProfile} />
       )}
     </div>

@@ -1,6 +1,7 @@
 import "date-fns";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Paper } from "@material-ui/core";
 import { Alert, Rating } from "@material-ui/lab";
@@ -147,7 +148,6 @@ function BookSitter({ profile, userProfile }) {
       setResErrMsg("Cannot create this request");
     }
   };
-  console.log(profile.availability);
   function disableDays(date) {
     return (
       (date.getDay() === 0 && !profile.availability.sundays) ||
@@ -249,10 +249,22 @@ function BookSitter({ profile, userProfile }) {
               <div className={classes.button}>
                 <Button
                   variant="contained"
-                  className={dates.bookButton}
+                  className={classes.bookButton}
                   type="submit"
                 >
                   SEND REQUEST
+                </Button>
+                <Button
+                  variant="contained"
+                  className={classes.bookButton}
+                  component={Link}
+                  profile={"s"}
+                  to={{
+                    pathname: "/messages",
+                    profile,
+                  }}
+                >
+                  SEND MESSAGE
                 </Button>
                 {resErr && <Alert severity="error">{resErrMsg}</Alert>}
                 {reqSuccess && (
