@@ -12,8 +12,6 @@ import Contacts from "./Contacts";
 
 const useStyles = makeStyles((theme) => ({
   messageRow: {
-    minHeight: "80vh",
-    maxHeight: "80vh",
     display: "flex",
     flexDirection: "column",
     padding: " 10px 0",
@@ -24,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
   },
   messages: {
     overflowY: "auto",
+    minHeight: "60vh",
+    maxHeight: "60vh",
   },
   mobileHide: {
     [theme.breakpoints.down("sm")]: {
@@ -74,7 +74,7 @@ export default function Messsanger({
       <Grid container>
         <Contacts contacts={contacts} chooseRecipient={chooseRecipient} />
         <Grid item xs={12} sm={9} className={classes.messageRow}>
-          <Grid item xs={12} className={classes.messages}>
+          <Grid item xs={12}>
             <Grid
               item
               xs={12}
@@ -99,7 +99,7 @@ export default function Messsanger({
                   : ""}
               </Typography>
             </Grid>
-            <List>
+            <List className={classes.messages}>
               {messages.map((message, index) =>
                 message.profileId._id !==
                 JSON.parse(localStorage.getItem("profile"))._id ? (
@@ -126,8 +126,8 @@ export default function Messsanger({
                   </ListItem>
                 )
               )}
+              <div ref={messagesEndRef} />
             </List>
-            <div ref={messagesEndRef} />
           </Grid>
           <Grid item xs={12} className={classes.input}>
             <form onSubmit={handleSubmit} className={classes.form}>
