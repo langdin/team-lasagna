@@ -39,18 +39,15 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
   pics: {
-    padding: "15px",
     overflow: "hidden",
   },
   aboutMeh: {
     textAlign: "center",
   },
   aboutPictures: {
-    maxWidth: "50%",
     textAlign: "center",
   },
   aboutImgs: {
-    width: "auto",
     maxHeight: "20em",
   },
   fabDel: {
@@ -256,10 +253,13 @@ export default function ProfilePhoto({ setPictureChanged }) {
       <Typography className={classes.aboutMeh} component="h5" variant="h5">
         About Me Photos
       </Typography>
-      <GridList cols={2} spacing={10} className={classes.pics}>
+      <Grid container className={classes.pics}>
         {profile.aboutPics &&
           profile.aboutPics.map((pic, i) => (
-            <div
+            <Grid
+              item
+              xs={12}
+              s={6}
               key={i}
               className={classes.aboutPictures}
               style={{ height: "100%" }}
@@ -272,9 +272,9 @@ export default function ProfilePhoto({ setPictureChanged }) {
               <Fab className={classes.fabDel}>
                 <DeleteIcon onClick={() => removeAboutPic(pic)} />
               </Fab>
-            </div>
+            </Grid>
           ))}
-      </GridList>
+      </Grid>
       <Grid item xs={12} align="center">
         <input
           accept="image/*"
