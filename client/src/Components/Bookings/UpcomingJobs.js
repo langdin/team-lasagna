@@ -5,6 +5,7 @@ import { Grid } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import Booking from "./Booking";
 import CalendarView from "./CalendarView";
+import { authService } from "../../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +55,8 @@ export default function UpcomingJobs() {
   async function getbookings(sitterId) {
     try {
       const fetchedbookings = await axios.get(
-        "http://localhost:3001/request/upcomingBookings/" + sitterId
+        "http://localhost:3001/request/upcomingBookings/" + sitterId,
+        authService.authHeader()
       );
       if (fetchedbookings.data) {
         setBookings(fetchedbookings.data);
@@ -72,7 +74,8 @@ export default function UpcomingJobs() {
     try {
       const fetchedbookings = await axios.put(
         "http://localhost:3001/request/completeBooking/" + id,
-        bookingRequest
+        bookingRequest,
+        authService.authHeader()
       );
       if (fetchedbookings.data) {
         setBookings((prevState) =>
@@ -92,7 +95,8 @@ export default function UpcomingJobs() {
         {
           request_id: id,
           amount: amount,
-        }
+        },
+        authService.authHeader()
       );
       console.log(confirmPayment);
       setProcessing(false);

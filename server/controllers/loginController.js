@@ -15,7 +15,11 @@ module.exports.authenticateUser = async (req, res) => {
     }
     isMatch = await User.comparePassword(password, user.password);
     if (isMatch) {
-      const token = jwt.sign(user.toJSON(), process.env.SECRET, {
+      const payload = {
+        _id: user._id,
+        email: user.email,
+      };
+      const token = jwt.sign(payload, process.env.SECRET, {
         expiresIn: process.env.TOKEN_TIMEOUT,
       });
       return res.status(200).send({ token: token });
@@ -27,12 +31,10 @@ module.exports.authenticateUser = async (req, res) => {
 };
 
 //token, oldPassword and new password are sent for this process.
-module.exports.updatedPassword = async(req, res) => {
-  const {oldPassword, newPassword, userId, token} = req.body
-  //console.log(token.token)
+module.exports.updatedPassword = async (req, res) => {
+  const { oldPassword, newPassword, userId, token } = req.body;
   let decoded = jwt.decode(token.token);
-  console.log(decoded)
-  const email = decoded.email
+  const email = decoded.email;
   //return res.status(200).send({ decoded });
   try {
     const user = await User.findById(userId);
@@ -44,16 +46,14 @@ module.exports.updatedPassword = async(req, res) => {
       const hashedpwd = await bcrypt.hash(newPassword, 10);
       const data = {
         password: hashedpwd,
-        email: email
+        email: email,
       };
-      console.log('old password match')
       user.set(data);
-      await user.save()
+      await user.save();
       return res.status(200).send({ msg: "Password update Successful" });
     }
     return res.status(400).send({ msg: "Old password dont match" });
-  } catch(error) {
-    console.log(error)
+  } catch (error) {
     res.status(500).send({ msg: "server error" });
-  }  
-}
+  }
+};

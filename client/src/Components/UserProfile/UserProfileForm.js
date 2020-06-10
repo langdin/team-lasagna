@@ -18,6 +18,7 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 import axios from "axios";
 import TextFieldInput from "./TextFieldInput";
 import { Alert } from "@material-ui/lab";
+import { authService } from "../../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -99,7 +100,8 @@ export default function UserProfile() {
   async function getProfile(id) {
     try {
       const fetchedProfile = await axios.get(
-        "http://localhost:3001/profile/" + id
+        "http://localhost:3001/profile/" + id,
+        authService.authHeader()
       );
       if (fetchedProfile.data) {
         setProfile(fetchedProfile.data);
@@ -131,7 +133,8 @@ export default function UserProfile() {
     try {
       const updatedProfile = await axios.put(
         "http://localhost:3001/profile/" + id,
-        updatedValues
+        updatedValues,
+        authService.authHeader()
       );
       if (updatedProfile.data) {
         setProfile(updatedProfile.data);

@@ -5,6 +5,7 @@ import { Card, Grid, Typography, Button } from "@material-ui/core";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 import BankAccount from "../Components/BankAccount/BankAccount";
+import { authService } from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +37,8 @@ export default function Payment() {
   const getCard = async () => {
     const profileId = JSON.parse(localStorage.getItem("profile"))._id;
     const cards = await axios.get(
-      "http://localhost:3001/payment/method/" + profileId
+      "http://localhost:3001/payment/method/" + profileId,
+      authService.authHeader()
     );
     if (cards.status !== 204) {
       setCard(cards.data.pm[0].card);

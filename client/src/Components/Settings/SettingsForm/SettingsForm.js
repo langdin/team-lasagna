@@ -5,12 +5,13 @@ import { RHFInput } from "react-hook-form-input";
 import { TextField, Button, Grid } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
+import { authService } from "../../../services/auth.service";
 
 const useStyles = makeStyles({
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '500px'
+    display: "flex",
+    flexDirection: "column",
+    maxWidth: "500px",
   },
   input: {
     marginTop: "10px",
@@ -34,9 +35,9 @@ function SettingsForm() {
   const [sucMsg, setSucMsg] = useState("");
   const { register, handleSubmit, setValue, errors } = useForm();
 
-  const token = JSON.parse(localStorage.getItem("jwt")) 
-  const profile = JSON.parse(localStorage.getItem("profile"))
-  const user = profile.user
+  const token = JSON.parse(localStorage.getItem("jwt"));
+  const profile = JSON.parse(localStorage.getItem("profile"));
+  const user = profile.user;
 
   const onSubmit = async (data) => {
     const payload = {
@@ -44,7 +45,7 @@ function SettingsForm() {
       newPassword: data.newPassword,
       repeatPassword: data.repeatPassword,
       userId: user,
-      token
+      token,
     };
     if (data.newPassword !== data.repeatPassword) {
       setpassUpdateError(true);
@@ -53,21 +54,25 @@ function SettingsForm() {
     }
     delete payload.repeatPassword;
     try {
-      const updateUserRes = await axios.post("/login/updatePassword", payload);
-      console.log(updateUserRes)
-      setpassUpdateError(false)
-      setpassUpdateSuccess(true)
-      setSucMsg(updateUserRes.data.msg)
+      const updateUserRes = await axios.post(
+        "/login/updatePassword",
+        payload,
+        authService.authHeader()
+      );
+      console.log(updateUserRes);
+      setpassUpdateError(false);
+      setpassUpdateSuccess(true);
+      setSucMsg(updateUserRes.data.msg);
     } catch (err) {
       setpassUpdateError(true);
-      console.log(err)
-      setErrMsg('Internal Server Error');
+      console.log(err);
+      setErrMsg("Internal Server Error");
     }
-  }
+  };
 
   function resetError() {
     setpassUpdateError(false);
-    setpassUpdateSuccess(false)
+    setpassUpdateSuccess(false);
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -86,8 +91,8 @@ function SettingsForm() {
         {errors.oldPassword && errors.oldPassword.type === "minLength" && (
           <Alert severity="error">must be at least 6 characters long</Alert>
         )}
-        </Grid>
-        <Grid item xs={12} align="center">
+      </Grid>
+      <Grid item xs={12} align="center">
         <RHFInput
           as={<TextField type="password" className={classes.input} />}
           register={register}
@@ -102,8 +107,8 @@ function SettingsForm() {
         {errors.newPassword && errors.newPassword.type === "minLength" && (
           <Alert severity="error">must be at least 6 characters long</Alert>
         )}
-        </Grid>
-        <Grid item xs={12} align="center">
+      </Grid>
+      <Grid item xs={12} align="center">
         <RHFInput
           as={<TextField type="password" className={classes.input} />}
           register={register}
@@ -115,11 +120,12 @@ function SettingsForm() {
         {errors.repeatPassword && errors.repeatPassword.type === "required" && (
           <Alert severity="error">Repeat password is required</Alert>
         )}
-        {errors.repeatPassword && errors.repeatPassword.type === "minLength" && (
-          <Alert severity="error">must be at least 6 characters long</Alert>
-        )}
-        </Grid>
-        <Grid item xs={12} align="center">
+        {errors.repeatPassword &&
+          errors.repeatPassword.type === "minLength" && (
+            <Alert severity="error">must be at least 6 characters long</Alert>
+          )}
+      </Grid>
+      <Grid item xs={12} align="center">
         <Button
           variant="contained"
           color="primary"
@@ -131,7 +137,7 @@ function SettingsForm() {
         </Button>
         {passUpdateError && <Alert severity="error">{errMsg}</Alert>}
         {passUpdateSuccess && <Alert severity="success">{sucMsg}</Alert>}
-        </Grid>
+      </Grid>
     </form>
   );
 }

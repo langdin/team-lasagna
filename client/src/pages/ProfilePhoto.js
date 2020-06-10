@@ -15,6 +15,7 @@ import Fab from "@material-ui/core/Fab";
 import { red } from "@material-ui/core/colors";
 import { Alert } from "@material-ui/lab";
 import axios from "axios";
+import { authService } from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,7 +87,8 @@ export default function ProfilePhoto({ setPictureChanged }) {
     try {
       console.log("get");
       const fetchedProfile = await axios.get(
-        "http://localhost:3001/profile/" + id
+        "http://localhost:3001/profile/" + id,
+        authService.authHeader()
       );
       // console.log(fetchedProfiles);
       if (fetchedProfile.data) {
@@ -105,7 +107,11 @@ export default function ProfilePhoto({ setPictureChanged }) {
     // send file to server and call
     try {
       data.append("image", event.target.files[0], event.target.files[0].name);
-      const res = await axios.post("http://localhost:3001/img/" + id, data);
+      const res = await axios.post(
+        "http://localhost:3001/img/" + id,
+        data,
+        authService.authHeader()
+      );
       setProcessing(false);
       setProfile(res.data);
       setSuccess(true);
@@ -131,7 +137,8 @@ export default function ProfilePhoto({ setPictureChanged }) {
       data.append("image", event.target.files[0], event.target.files[0].name);
       const res = await axios.put(
         "http://localhost:3001/img/about-me/" + id,
-        data
+        data,
+        authService.authHeader()
       );
       setProfile(res.data);
       setAboutSuccess(true);
@@ -150,7 +157,10 @@ export default function ProfilePhoto({ setPictureChanged }) {
     setProcessing(true);
     // send file to server and call
     try {
-      const res = await axios.delete("http://localhost:3001/img/" + id);
+      const res = await axios.delete(
+        "http://localhost:3001/img/" + id,
+        authService.authHeader()
+      );
       setProcessing(false);
       setSuccess(true);
       setProfile(res.data);
@@ -176,7 +186,8 @@ export default function ProfilePhoto({ setPictureChanged }) {
         "http://localhost:3001/img/delete-about-me/" + id,
         {
           url: url,
-        }
+        },
+        authService.authHeader()
       );
       setProfile(res.data);
       console.log(res);

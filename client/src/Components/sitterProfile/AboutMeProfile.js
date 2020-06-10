@@ -49,8 +49,6 @@ const useStyles = makeStyles({
 
 function AboutMeProfile({ profile }) {
   const classes = useStyles();
-  //console.log(props);
-  //console.log(profile.address.city);
   return (
     <div className={classes.paper}>
       <Paper className={classes.muiPaper} elevation={2} square={false}>

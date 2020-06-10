@@ -13,6 +13,7 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
+import { authService } from "../../services/auth.service";
 
 const useStyles = makeStyles({
   bookSitterPaper: {
@@ -136,7 +137,7 @@ function BookSitter({ profile, userProfile }) {
       declined: false,
     };
     try {
-      const res = await axios.post("/request", body);
+      const res = await axios.post("/request", body, authService.authHeader());
       if (res.status === 200) {
         setReqSuccess(true);
       } else {
