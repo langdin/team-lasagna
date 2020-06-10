@@ -7,6 +7,7 @@ import { Grid } from "@material-ui/core";
 import Messanger from "../Components/Messages/Messanger";
 import ContactsCollapsed from "../Components/Messages/ContactsCollapsed";
 import socket from "../utils/socket";
+import { authService } from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -32,13 +33,15 @@ export default function Messages() {
     e.preventDefault();
     if (conversation === "" || newMessage.length === 0) return;
     try {
+      const data = {
+        conversationId: conversation,
+        profileId: JSON.parse(localStorage.getItem("profile"))._id,
+        text: newMessage,
+      };
       const msg = await axios.post(
         `http://localhost:3001/conversation/message`,
-        {
-          conversationId: conversation,
-          profileId: JSON.parse(localStorage.getItem("profile"))._id,
-          text: newMessage,
-        }
+        data,
+        authService.authHeader()
       );
       socket.emit("new message", msg.data.message);
     } catch (err) {
@@ -51,7 +54,8 @@ export default function Messages() {
     if (conversation === "") return;
     try {
       const msgArray = await axios.get(
-        `http://localhost:3001/conversation/messages/${conversation}`
+        `http://localhost:3001/conversation/messages/${conversation}`,
+        authService.authHeader()
       );
       if (msgArray.data) {
         setMessages(
@@ -69,7 +73,8 @@ export default function Messages() {
     const profile = JSON.parse(localStorage.getItem("profile"));
     try {
       const contacts = await axios.get(
-        `http://localhost:3001/conversation/${profile._id}`
+        `http://localhost:3001/conversation/${profile._id}`,
+        authService.authHeader()
       );
       if (contacts.data) {
         const arr = [];
@@ -118,12 +123,14 @@ export default function Messages() {
 
   const createConversation = async () => {
     try {
+      const data = {
+        recipientId: location.profile._id,
+        senderId: JSON.parse(localStorage.getItem("profile"))._id,
+      };
       const newConversation = await axios.post(
         `http://localhost:3001/conversation/`,
-        {
-          recipientId: location.profile._id,
-          senderId: JSON.parse(localStorage.getItem("profile"))._id,
-        }
+        data,
+        authService.authHeader()
       );
       if (newConversation.data) {
         setConversation(newConversation.data.conversation._id);

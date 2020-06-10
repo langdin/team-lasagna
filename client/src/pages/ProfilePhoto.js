@@ -15,6 +15,7 @@ import Fab from "@material-ui/core/Fab";
 import { red } from "@material-ui/core/colors";
 import { Alert } from "@material-ui/lab";
 import axios from "axios";
+import { authService } from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,18 +39,15 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
   pics: {
-    padding: "15px",
     overflow: "hidden",
   },
   aboutMeh: {
     textAlign: "center",
   },
   aboutPictures: {
-    maxWidth: "50%",
     textAlign: "center",
   },
   aboutImgs: {
-    width: "auto",
     maxHeight: "20em",
   },
   fabDel: {
@@ -86,7 +84,8 @@ export default function ProfilePhoto({ setPictureChanged }) {
     try {
       console.log("get");
       const fetchedProfile = await axios.get(
-        "http://localhost:3001/profile/" + id
+        "http://localhost:3001/profile/" + id,
+        authService.authHeader()
       );
       // console.log(fetchedProfiles);
       if (fetchedProfile.data) {
@@ -105,7 +104,11 @@ export default function ProfilePhoto({ setPictureChanged }) {
     // send file to server and call
     try {
       data.append("image", event.target.files[0], event.target.files[0].name);
-      const res = await axios.post("http://localhost:3001/img/" + id, data);
+      const res = await axios.post(
+        "http://localhost:3001/img/" + id,
+        data,
+        authService.authHeader()
+      );
       setProcessing(false);
       setProfile(res.data);
       setSuccess(true);
@@ -131,7 +134,8 @@ export default function ProfilePhoto({ setPictureChanged }) {
       data.append("image", event.target.files[0], event.target.files[0].name);
       const res = await axios.put(
         "http://localhost:3001/img/about-me/" + id,
-        data
+        data,
+        authService.authHeader()
       );
       setProfile(res.data);
       setAboutSuccess(true);
@@ -150,7 +154,10 @@ export default function ProfilePhoto({ setPictureChanged }) {
     setProcessing(true);
     // send file to server and call
     try {
-      const res = await axios.delete("http://localhost:3001/img/" + id);
+      const res = await axios.delete(
+        "http://localhost:3001/img/" + id,
+        authService.authHeader()
+      );
       setProcessing(false);
       setSuccess(true);
       setProfile(res.data);
@@ -176,7 +183,8 @@ export default function ProfilePhoto({ setPictureChanged }) {
         "http://localhost:3001/img/delete-about-me/" + id,
         {
           url: url,
-        }
+        },
+        authService.authHeader()
       );
       setProfile(res.data);
       console.log(res);
@@ -245,10 +253,13 @@ export default function ProfilePhoto({ setPictureChanged }) {
       <Typography className={classes.aboutMeh} component="h5" variant="h5">
         About Me Photos
       </Typography>
-      <GridList cols={2} spacing={10} className={classes.pics}>
+      <Grid container className={classes.pics}>
         {profile.aboutPics &&
           profile.aboutPics.map((pic, i) => (
-            <div
+            <Grid
+              item
+              xs={12}
+              s={6}
               key={i}
               className={classes.aboutPictures}
               style={{ height: "100%" }}
@@ -261,9 +272,9 @@ export default function ProfilePhoto({ setPictureChanged }) {
               <Fab className={classes.fabDel}>
                 <DeleteIcon onClick={() => removeAboutPic(pic)} />
               </Fab>
-            </div>
+            </Grid>
           ))}
-      </GridList>
+      </Grid>
       <Grid item xs={12} align="center">
         <input
           accept="image/*"

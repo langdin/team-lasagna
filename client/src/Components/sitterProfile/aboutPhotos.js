@@ -4,7 +4,6 @@ const useStyles = makeStyles({});
 function AboutPhotos({ profile }) {
   const classes = useStyles();
   const [loaded, setLoaded] = useState(false);
-  console.log(profile);
   useEffect(() => {
     setLoaded(true);
   }, [profile]);

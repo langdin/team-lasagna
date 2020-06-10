@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import { Alert } from "@material-ui/lab";
 import AlternateCheckbox from "./AlternateCheckbox";
+import { authService } from "../../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -77,7 +78,8 @@ export default function Availability() {
   async function getProfile(id) {
     try {
       const fetchedProfile = await axios.get(
-        "http://localhost:3001/profile/" + id
+        "http://localhost:3001/profile/" + id,
+        authService.authHeader()
       );
       console.log(fetchedProfile.data);
       if (fetchedProfile.data) {
@@ -106,7 +108,8 @@ export default function Availability() {
     try {
       const updatedProfile = await axios.put(
         "http://localhost:3001/profile/" + id,
-        updatedValues
+        updatedValues,
+        authService.authHeader()
       );
       console.log(updatedProfile);
       if (updatedProfile.data) {

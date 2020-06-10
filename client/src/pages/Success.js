@@ -6,6 +6,7 @@ import { green } from "@material-ui/core/colors";
 import { Card, Grid, Avatar, CardContent, Typography } from "@material-ui/core";
 import { Link, withRouter } from "react-router-dom";
 import { useLocation } from "react-router";
+import { authService } from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +42,8 @@ const Success = ({ match }) => {
 
   const getSession = async () => {
     const response = await axios.get(
-      "http://localhost:3001/payment/retrieve/" + match.params.id
+      "http://localhost:3001/payment/retrieve/" + match.params.id,
+      authService.authHeader()
     );
     console.log(response);
   };
@@ -54,7 +56,8 @@ const Success = ({ match }) => {
         code: code,
         state: state,
         profile_id: profile._id,
-      }
+      },
+      authService.authHeader()
     );
     localStorage.setItem("profile", JSON.stringify(response.data.profile));
   };

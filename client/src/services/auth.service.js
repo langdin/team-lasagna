@@ -21,7 +21,6 @@ export const authService = {
     return currentUserProfileSubject.value;
   },
 };
-
 async function login(email, password) {
   try {
     const res = await axios.post("/login", {
@@ -35,7 +34,6 @@ async function login(email, password) {
     const errMsg = "";
     return errMsg;
   } catch (err) {
-    console.log(err);
     logout();
     return err.response.data.msg;
   }
@@ -50,7 +48,7 @@ function authHeader() {
   // return authorization header with jwt token
   const currentUser = authService.currentUserValue;
   if (currentUser && currentUser.token) {
-    return { Authorization: `Bearer ${currentUser.token}` };
+    return { headers: { Authorization: `Bearer ${currentUser.token}` } };
   } else {
     return {};
   }

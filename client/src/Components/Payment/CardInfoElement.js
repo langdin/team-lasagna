@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Alert } from "@material-ui/lab";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import { authService } from "../../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -49,7 +50,8 @@ const CardInfoElement = () => {
         {
           profile_id: profileId,
           payment_method_id: result.paymentMethod.id,
-        }
+        },
+        authService.authHeader()
       );
       setLoad(false);
       if (method.data.success) {
