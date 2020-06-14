@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import Booking from "./Booking";
 import CalendarView from "./CalendarView";
@@ -121,7 +121,15 @@ export default function Bookings() {
     }
   }
 
-  let RequestList = "No Bookings Found for you!";
+  let RequestList = (
+    <Typography
+      variant="h5"
+      fontWeight="fontWeightBold"
+      className={classes.title}
+    >
+      No Bookings Found For You!
+    </Typography>
+  );
   if (bookings.length > 0) {
     RequestList = bookings.map((booking, index) => {
       return (
