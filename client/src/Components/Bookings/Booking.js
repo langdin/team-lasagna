@@ -44,7 +44,6 @@ export default function Booking(props) {
 
   let request = props.booking.request;
   let ownerProfile = props.booking.ownerProfile;
-  console.log(ownerProfile);
   let duration = "";
   let ownerFullName = "";
   let address1 = "";
