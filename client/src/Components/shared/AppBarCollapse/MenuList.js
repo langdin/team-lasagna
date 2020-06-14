@@ -75,6 +75,9 @@ const MenuList = ({ isAuthenticated, pictureChanged }) => {
           <Link href="/messages" className={classes.toolbarLink}>
             Messages
           </Link>
+          <Link href="/ownerBookings" className={classes.toolbarLink}>
+            My Requests
+          </Link>
           <Link href="/bookings" className={classes.toolbarLink}>
             My Jobs
           </Link>
